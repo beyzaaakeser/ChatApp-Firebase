@@ -1,15 +1,18 @@
-import React  from 'react';
+import React from 'react';
 import { auth, provider } from '../firebase/firebase';
 import { signInWithPopup } from 'firebase/auth';
 
-const LoginPage = ({setIsAuth}) => {
- 
+const LoginPage = ({ setIsAuth }) => {
   const handleClick = () => {
     signInWithPopup(auth, provider)
-      .then((res) => setIsAuth(true))
+      .then((res) => {
+        setIsAuth(true);
+        localStorage.setItem("token",res.user.refreshToken)
+        console.log(res.user);
+      })
       .catch((err) => console.log(err));
   };
-  
+
   return (
     <div className="container">
       <div className="login">
