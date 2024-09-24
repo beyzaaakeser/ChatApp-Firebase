@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import './App.css';
+import { useState } from 'react';
+import { auth, provider } from './firebase/firebase';
+import { signInWithPopup } from 'firebase/auth';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
+  const [user, setUser] = useState(null);
+  const handleClick = () => {
+    signInWithPopup(auth, provider)
+      .then((response) => setUser(response.user))
+      .catch((err) => console.log(err + 'İşlem Başarısız'));
+  };
+  console.log(user);
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        {user ? (
+          <div>
+            <img
+              src={`${user?.photoURL}`}
+              alt="User Profile"
+              style={{ width: '96px', height: '96px', borderRadius: '50%' }}
+              onError={() => console.log('Resim yüklenemedi')}
+            />
+            <h3>{user.displayName}</h3>
+            <h4>{user.email}</h4>
+          </div>
+        ) : (
+          <button onClick={handleClick}>Google ile giriş yap</button>
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
