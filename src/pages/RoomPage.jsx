@@ -1,5 +1,5 @@
 import { signOut } from 'firebase/auth';
-import { auth } from '../firebase/firebase';
+import { auth } from '../firebase';
 
 const RoomPage = ({ setIsAuth, setRoom }) => {
   const logout = () => {

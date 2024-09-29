@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import LoginPage from './pages/LoginPage';
 import RoomPage from './pages/RoomPage';
-import { auth } from './firebase/firebase.js';
 import ChatPage from './pages/ChatPage';
 
 

@@ -1,9 +1,26 @@
-import React from 'react';
-import { auth } from '../firebase/firebase';
+import React, { useState } from 'react';
+import { auth, db } from '../firebase';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 
 const ChatPage = ({ room, setRoom }) => {
-  const handleSubmit = (e) => {
+  const [text, setText] = useState('');
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (text.trim() === '') return;
+
+    const messagesCol = collection(db, 'messages');
+
+    await addDoc(messagesCol, {
+      text,
+      room,
+      author: {
+        id: auth.currentUser.uid,
+        name: auth.currentUser.displayName,
+        photo: auth.currentUser.photoURL,
+      },
+      createdAt: serverTimestamp(),
+    });
   };
 
   return (
@@ -18,7 +35,11 @@ const ChatPage = ({ room, setRoom }) => {
       <main>messages</main>
 
       <form onSubmit={handleSubmit} className="message-form">
-        <input type="text" placeholder="Message" />
+        <input
+          onChange={(e) => setText(e.target.value)}
+          type="text"
+          placeholder="Message"
+        />
         <button type="submit">Send</button>
       </form>
     </div>
