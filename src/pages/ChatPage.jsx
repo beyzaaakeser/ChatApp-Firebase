@@ -1,28 +1,28 @@
-import React from 'react'
-import { auth } from '../firebase/firebase'
+import React from 'react';
+import { auth } from '../firebase/firebase';
 
+const ChatPage = ({ room, setRoom }) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
-const ChatPage = ({room,setRoom}) => {
   return (
-    <div className='chat-page'>
+    <div className="chat-page">
+      <header>
+        <p>{auth.currentUser.displayName}</p>
+        <p>{room}</p>
 
-        <header>
-          <p>{auth.currentUser.displayName}</p>
-          <p>{room}</p>
+        <button onClick={() => setRoom(null)}>Change Chat Room</button>
+      </header>
 
-          <button onClick={() => setRoom(null)}>Change Chat Room</button>
-        </header>
+      <main>messages</main>
 
-        <main>
-          messages
-        </main>
-
-        <form className='message-form'>
-          <input type="text" placeholder='Message'/>
-          <button type='submit'>Send</button>
-        </form>
+      <form onSubmit={handleSubmit} className="message-form">
+        <input type="text" placeholder="Message" />
+        <button type="submit">Send</button>
+      </form>
     </div>
-  )
-}
+  );
+};
 
-export default ChatPage
+export default ChatPage;
