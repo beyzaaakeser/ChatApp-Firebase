@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { auth, db } from '../firebase';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  serverTimestamp,
+  query,
+  where,
+  orderBy,
+} from 'firebase/firestore';
+import Message from '../components/Message';
 
 const ChatPage = ({ room, setRoom }) => {
   const [text, setText] = useState('');
+  const [messages, setMessages] = useState([]);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setText('');
 
     if (text.trim() === '') return;
 
@@ -23,6 +34,22 @@ const ChatPage = ({ room, setRoom }) => {
     });
   };
 
+  useEffect(() => {
+    const messagesCol = collection(db, 'messages');
+    const q = query(
+      messagesCol,
+      where('room', '==', room),
+      orderBy('createdAt', 'asc')
+    );
+    onSnapshot(q, (data) => {
+      let temp = [];
+      data.docs.forEach((doc) => {
+        temp.push(doc.data());
+      });
+      setMessages(temp);
+    });
+  }, []);
+
   return (
     <div className="chat-page">
       <header>
@@ -32,10 +59,19 @@ const ChatPage = ({ room, setRoom }) => {
         <button onClick={() => setRoom(null)}>Change Chat Room</button>
       </header>
 
-      <main>messages</main>
+      <main>
+        {messages.length < 1 ? (
+          <div className="warn">
+            <p>Send first message to chat</p>
+          </div>
+        ) : (
+          messages.map((data, key) => <Message key={key} data={data} />)
+        )}
+      </main>
 
       <form onSubmit={handleSubmit} className="message-form">
         <input
+          value={text}
           onChange={(e) => setText(e.target.value)}
           type="text"
           placeholder="Message"
