@@ -174,9 +174,20 @@ button {
   color: white;
 }
 
-.warn{
+.warn {
   flex: 1;
   display: grid;
   place-items: center;
   color: gray;
+}
+
+.chat-page .message-form {
+  position: relative;
+}
+
+.chat-page .message-form div aside {
+  position: absolute;
+  right: 25px;
+  top: -450px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.508);
 }

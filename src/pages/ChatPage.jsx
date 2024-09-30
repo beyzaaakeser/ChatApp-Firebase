@@ -10,10 +10,12 @@ import {
   orderBy,
 } from 'firebase/firestore';
 import Message from '../components/Message';
+import EmojiPicker from 'emoji-picker-react';
 
 const ChatPage = ({ room, setRoom }) => {
   const [text, setText] = useState('');
   const [messages, setMessages] = useState([]);
+  const [isOpen, setIsOpen] = useState(false)
   const lastMsg = useRef();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,13 +44,17 @@ const ChatPage = ({ room, setRoom }) => {
       where('room', '==', room),
       orderBy('createdAt', 'asc')
     );
-    onSnapshot(q, (data) => {
+    const unSub = onSnapshot(q, (data) => {
       let temp = [];
       data.docs.forEach((doc) => {
         temp.push(doc.data());
       });
       setMessages(temp);
     });
+
+    return () => {
+      unSub();
+    };
   }, []);
 
   useEffect(() => {
@@ -83,6 +89,11 @@ const ChatPage = ({ room, setRoom }) => {
           type="text"
           placeholder="Message"
         />
+        <div>
+          <EmojiPicker open={isOpen} />
+          <button type='button' onClick={() => setIsOpen(!isOpen)}>😉</button>
+        </div>
+
         <button type="submit">Send</button>
       </form>
     </div>
