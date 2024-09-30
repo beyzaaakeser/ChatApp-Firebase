@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { auth, db } from '../firebase';
 import {
   addDoc,
@@ -14,6 +14,7 @@ import Message from '../components/Message';
 const ChatPage = ({ room, setRoom }) => {
   const [text, setText] = useState('');
   const [messages, setMessages] = useState([]);
+  const lastMsg = useRef();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setText('');
@@ -50,6 +51,10 @@ const ChatPage = ({ room, setRoom }) => {
     });
   }, []);
 
+  useEffect(() => {
+    lastMsg.current.scrollIntoView();
+  }, [messages]);
+
   return (
     <div className="chat-page">
       <header>
@@ -67,6 +72,8 @@ const ChatPage = ({ room, setRoom }) => {
         ) : (
           messages.map((data, key) => <Message key={key} data={data} />)
         )}
+
+        <div ref={lastMsg} />
       </main>
 
       <form onSubmit={handleSubmit} className="message-form">
