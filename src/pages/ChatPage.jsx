@@ -15,11 +15,12 @@ import EmojiPicker from 'emoji-picker-react';
 const ChatPage = ({ room, setRoom }) => {
   const [text, setText] = useState('');
   const [messages, setMessages] = useState([]);
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const lastMsg = useRef();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setText('');
+    setIsOpen(false);
 
     if (text.trim() === '') return;
 
@@ -90,8 +91,17 @@ const ChatPage = ({ room, setRoom }) => {
           placeholder="Message"
         />
         <div>
-          <EmojiPicker open={isOpen} />
-          <button type='button' onClick={() => setIsOpen(!isOpen)}>😉</button>
+          <EmojiPicker
+            onEmojiClick={(emojiObject) => {
+              setText((prevText) => prevText + emojiObject.emoji);
+            }}
+            open={isOpen}
+            skinTonePickerLocation="PREVIEW"
+          />
+
+          <button type="button" onClick={() => setIsOpen(!isOpen)}>
+            😉
+          </button>
         </div>
 
         <button type="submit">Send</button>
