@@ -173,7 +173,7 @@ button {
   flex-direction: column;
   overflow: auto;
   gap: 1rem;
-  background: url('../../public/back.jpg') center center no-repeat;
+  background: url('./back.jpg') center center no-repeat;
   background-size: cover;
 
   &::-webkit-scrollbar {

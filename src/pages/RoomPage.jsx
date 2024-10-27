@@ -18,7 +18,7 @@ const RoomPage = ({ setIsAuth, setRoom }) => {
   return (
     <form onSubmit={handleSubmit} className="room-page">
       <div>
-        <img src="../../public/chatLogo.png" alt="" />
+        <img src="./chatLogo.png" alt="" />
         <h1>Chat Room</h1>
       </div>
 
