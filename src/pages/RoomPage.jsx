@@ -1,5 +1,5 @@
 import { signOut } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth } from '../firebase/index.js';
 
 const RoomPage = ({ setIsAuth, setRoom }) => {
   const logout = () => {
@@ -17,7 +17,11 @@ const RoomPage = ({ setIsAuth, setRoom }) => {
 
   return (
     <form onSubmit={handleSubmit} className="room-page">
-      <h1>Chat Room</h1>
+      <div>
+        <img src="../../public/chatLogo.png" alt="" />
+        <h1>Chat Room</h1>
+      </div>
+
       <p>Which chat room do you want to enter?</p>
 
       <input type="text" placeholder="Exp:Art" required />

@@ -16,7 +16,11 @@ const LoginPage = ({ setIsAuth }) => {
   return (
     <div className="container">
       <div className="login">
-        <h1>Chat Room</h1>
+        <div>
+          <img src="/public/chatLogo.png" alt="" />
+          <h1>Chat Room</h1>
+        </div>
+
         <p>Log in to continue</p>
         <button onClick={handleClick}>
           <img width={30} src="/public/google-icon.png" alt="google" />

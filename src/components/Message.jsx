@@ -1,18 +1,25 @@
 import React from 'react';
-import { auth } from '../firebase';
+import { auth } from '../firebase/index.js';
 
 const Message = ({ data }) => {
-  if (auth.currentUser.uid === data.author.id) {
-    return <p className='msg-user'>{data.text}</p>;
+  if (auth.currentUser?.uid === data.author.id) {
+    return (
+      <div className="msg-user">
+        <img src={auth?.currentUser?.photoURL} alt="" />
+        <p>{data.text}</p>
+      </div>
+    );
   }
 
   return (
     <div className="msg-other">
-      <div>
-        <img src={data.author.photo} alt="profile" />
-        <span>{data.author.name}</span>
+      <img src={data?.author?.photo} alt="" />
+
+    
+      <div className="user-info">
+        <p>{data.author?.name}</p>
+        <p className="msg-text">{data.text}</p>
       </div>
-      <p className="msg-text">{data.text}</p>
     </div>
   );
 };
