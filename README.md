@@ -10,23 +10,25 @@ ChatApp is an application that allows users to securely sign in with Google, joi
 - Emoji-Picker-React
 
 
-<!-- <h4>GIF</h5>
+ <h4>GIF</h5>
 
-![](/public/FirebaseEcommerce-gif.gif)
+![](/public/chatApp.gif)
 
 <h4>IMAGES</h4>
 
 <h5>Sign In Page</h5>
 
-![](/public/login-page.png)
+![](/public/signin.png)
 
 <h5>Select Chat Room Page</h5>
 
-![](/public/products.png)
+![](/public/selectchatroom.png)
 
 <h5>Chat Page</h5>
 
-![](/public/cart.png)
+![](/public/room1.png)
 
+![](/public/room2.png)
 
- -->
+![](/public/room3.png)
+
